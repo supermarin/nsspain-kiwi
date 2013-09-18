@@ -12,5 +12,6 @@
 
 
 NSDate *atTime(NSString *humanTime);
+void setTimeTo(NSString *time);
 
 @end

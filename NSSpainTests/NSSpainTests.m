@@ -21,6 +21,7 @@ describe(@"sample spec", ^{
 
     beforeEach(^{
         machine = [TicketMachine new];
+        setTimeTo(@"12:00 PM");
     });
 
     it(@"starts with 1", ^{
@@ -41,9 +42,26 @@ describe(@"sample spec", ^{
 
     context(@"working times", ^{
 
-        it(@"works from 8AM", ^{
-//            atTime(@"5:00 PM");
+
+        it(@"doesn't work before 8", ^{
+            setTimeTo(@"7:59 PM");
+            [[[machine nextTicket] should] beNil];
         });
+
+        it(@"works from 8AM", ^{
+            setTimeTo(@"8:00 AM");
+            [[[machine nextTicket].number should] equal:@1];
+        });
+
+        it(@"doesn't work after 4:00 PM", ^{
+            setTimeTo(@"4:01 PM");
+
+            [[[machine nextTicket] should] beNil];
+        });
+        
+
+
+
 
     });
 
