@@ -16,15 +16,8 @@
 @implementation TicketMachine
 
 - (Ticket *)nextTicket {
-    NSDate *now = [NSDate date];
 
-    NSDate *eightAM = [[[self class] sharedDateFormatter] dateFromString:@"8:00 AM"];
-    NSDate *fourPM = [[[self class] sharedDateFormatter] dateFromString:@"4:00 PM"];
-
-    if ([now compare:eightAM] == NSOrderedAscending) {
-        return nil;
-    }
-    else if ([now compare:fourPM] == NSOrderedDescending) {
+    if (![self isWorkingTime]) {
         return nil;
     }
 
@@ -35,6 +28,20 @@
 }
 
 #pragma mark - Private
+
+- (BOOL)isWorkingTime {
+    NSDate *now = [NSDate date];
+
+    NSDate *eightAM = [[[self class] sharedDateFormatter] dateFromString:@"8:00 AM"];
+    NSDate *fourPM = [[[self class] sharedDateFormatter] dateFromString:@"4:00 PM"];
+
+    if ([now compare:eightAM] == NSOrderedAscending ||
+        [now compare:fourPM] == NSOrderedDescending) {
+        return NO;
+    }
+
+    return YES;
+}
 
 #pragma mark - Singleton
 

@@ -55,13 +55,8 @@ describe(@"sample spec", ^{
 
         it(@"doesn't work after 4:00 PM", ^{
             setTimeTo(@"4:01 PM");
-
             [[[machine nextTicket] should] beNil];
         });
-        
-
-
-
 
     });
 
